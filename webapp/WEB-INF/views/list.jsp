@@ -28,7 +28,7 @@
 			</tr>
 			<tr>
 				<td><a href="/phonebook4/updateForm?no=${personVo.person_id}">[수정]</a></td>
-				<td><a href="/phonebook4/delete/${personVo.person_id}">[삭제]</a></td>
+				<td><a href="/phonebook4/delete?no=${personVo.person_id}">[삭제]</a></td>
 			</tr>
 		</table>
 		<br>
