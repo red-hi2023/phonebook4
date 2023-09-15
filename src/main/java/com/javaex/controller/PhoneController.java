@@ -1,6 +1,8 @@
 package com.javaex.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -90,20 +92,58 @@ public class PhoneController {
 		return "redirect:/list";
 	}
 	
+	/*Map사용 예제*/
+	@RequestMapping(value="/insert2", method= {RequestMethod.GET,RequestMethod.POST})
+	public String insert2(@RequestParam(value="name") String name) {
+		System.out.println("PhoneController.insert2()");
+		
+		//name 파라미터
+		
+		//hp, company insert2()내에서 계산된 값
+		String hp="010-0000-0000";
+		String company="02-0000-0000";
+		
+		//1) vo로 묶는다
+		/*
+		PersonVo personVo = new PersonVo(); //PersonVo가 없으면 만든다
+		personVo.setPerson_id(personId);
+		personVo.setHp(hp);
+		personVo.setCompany(company);
+		*/
+		
+		//2) vo를 안만든다  ?==> 이번 딱 1번만 사용 ==> Map을 사용한다
+		Map<String, String> personMap = new HashMap<String, String>();
+		personMap.put("name", name);
+		personMap.put("hp", hp);
+		personMap.put("company", company);
+	
+		int count = personDao.personInsert2(personMap);
+		
+		return "redirect:/list";
+	}
+	
+	/*Map사용 예제*/
+	@RequestMapping(value="/updateForm2", method= {RequestMethod.GET,RequestMethod.POST})
+	public String updateForm2(@RequestParam(value="no") int no, Model model) {
+		System.out.println("PhoneController.updateForm2()");
+		
+		Map<String, Object> personMap =personDao.peronSelectOne2(no);
+		
+		model.addAttribute("personMap", personMap);
+		
+		return "/updateForm2";
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/* resultType 예제 */
+	@RequestMapping(value="/list2", method = {RequestMethod.GET, RequestMethod.POST })
+	public String list2() {
+		System.out.println("PhoneController.list2()");
+		
+		List<PersonVo> personList = personDao.personSelect2();
+		
+		return "";
+	}
 	
 	
 }
